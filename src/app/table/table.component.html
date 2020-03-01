@@ -1,0 +1,43 @@
+<div class="example-container mat-elevation-z8">
+    <div class="example-loading-shade"
+         *ngIf="isLoadingResults || isRateLimitReached">
+      <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+      <div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
+        GitHub's API rate limit has been reached. It will be reset in one minute.
+      </div>
+    </div>
+  
+    <div class="example-table-container">
+  
+      <table mat-table [dataSource]="data" class="example-table"
+             matSort matSortActive="Build_ID" matSortDisableClear matSortDirection="asc">
+
+        <ng-container matColumnDef="Build_ID">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Build_ID</th>
+          <td mat-cell *matCellDef="let row">{{row.Build_ID}}</td>
+        </ng-container>
+  
+        <ng-container matColumnDef="Test_Environment">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Test_Environment</th>
+          <td mat-cell *matCellDef="let row">{{row.Test_Environment}}</td>
+        </ng-container>
+  
+        <ng-container matColumnDef="CI_Application_Name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>CI_Application_Name</th>
+          <td mat-cell *matCellDef="let row">{{row.CI_Application_Name}}</td>
+        </ng-container>
+  
+        <ng-container matColumnDef="Build_Status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
+            Build_Status
+          </th>
+          <td mat-cell *matCellDef="let row">{{row.Build_Status}}</td>
+        </ng-container>
+  
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  
+    <mat-paginator [length]="resultsLength" [pageSize]="3"></mat-paginator>
+  </div>
