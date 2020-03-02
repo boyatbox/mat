@@ -6,12 +6,19 @@
         GitHub's API rate limit has been reached. It will be reset in one minute.
       </div>
     </div>
-  
+    <div class="action-bar">
+      <p>test</p>
+      <!-- <ng-content select="ng-container[action-bar-items]"></ng-content> -->
+    </div>
     <div class="example-table-container">
-  
+     
       <table mat-table [dataSource]="data" class="example-table"
              matSort matSortActive="Build_ID" matSortDisableClear matSortDirection="asc">
+             <div>
 
+              <span>...Anything can be passed in here...</span>
+        
+          </div>
         
          <!-- Checkbox Column
         <ng-container matColumnDef="select">
