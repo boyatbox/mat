@@ -287,7 +287,7 @@ export class TreeComponent implements OnInit {
       }
     }
     //console.log(this.checklistSelection.selected) 
-    return (arr);
+    return (arr.join());
   }
 
 }

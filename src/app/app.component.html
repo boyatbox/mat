@@ -24,34 +24,7 @@
     <app-tree #userInformation></app-tree>
   </div>
   <div class="column right">
-    <table id="builds">
-      <thead>
-        <tr>
-          <th>Build_ID</th>
-          <th>Portfolio</th>
-          <th>Valuestream</th>
-          <th>Application</th>
-          <th>Environement</th>
-          <th>Type</th>
-          <th>RCA</th>
-          <th>Date</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let _build of builds" (click)="RowSelected(_build)"
-          [ngClass]="{'highlight' : _build.Build_ID == selectedBuildId}">
-          <td>{{_build.Build_ID}}</td>
-          <td>{{_build.Portfolio_Name}}</td>
-          <td>{{_build.ValueStream_Name}}</td>
-          <td>{{_build.CI_Application_Name}}</td>
-          <td>{{_build.Test_Environment}}</td>
-          <td>{{_build.Test_Type}}</td>
-          <td>{{_build.Predicted_RCA}}</td>
-          <td>{{_build.Start_DateTimeStamp}}</td>
-        </tr>
-      </tbody>
-    </table>
+    <app-table [objtree]="userInformation"></app-table>
   </div>
 </div>
 
-<app-table></app-table>

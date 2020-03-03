@@ -4,7 +4,6 @@ import { Build,DataService } from './data.service';
 import {PageEvent} from '@angular/material/paginator';
 import {TreeComponent} from './tree/tree.component';
 
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

@@ -56,6 +56,9 @@ import {BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TreeComponent } from './tree/tree.component';
 import { TableComponent } from './table/table.component';
 
+
+import { FormsModule } from '@angular/forms';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -68,6 +71,8 @@ import { TableComponent } from './table/table.component';
     //MDCDataTable,
     A11yModule,
     HttpClientModule,
+
+    FormsModule,
    // FlexLayoutModule,
 
     //ClipboardModule,

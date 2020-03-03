@@ -7,17 +7,21 @@
   float: left;
   padding: 10px;
   height: 100%; /* Should be removed. Only for demonstration */
-  border: solid 1px;
 }
 
 .left {
-  width: 15%;
-  border: solid 1px;
+  width: 20%;
+  margin:0px;
+
+  border-left:1px solid #38546d; 
+  border-right:1px solid #16222c; 
+  height:900px;
+  top:10px; 
 }
 
 .right {
-  width: 85%;
-  border: solid 1px;
+  width: 80%;
+  margin:0px;
 }
 
 /* Clear floats after the columns */

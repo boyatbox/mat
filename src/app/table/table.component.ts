@@ -1,9 +1,10 @@
 import {HttpClient} from '@angular/common/http';
-import {Component, ViewChild, AfterViewInit,OnInit} from '@angular/core';
+import {Component, ViewChild, AfterViewInit,OnInit, Input} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {merge, Observable, of as observableOf} from 'rxjs';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
+import {TreeComponent} from './../tree/tree.component';
 
 import { Build,DataService } from './../data.service';
 /**
@@ -18,7 +19,9 @@ export class TableComponent implements AfterViewInit {
   displayedColumns: string[] = ['Build_ID', 'CI_Application_Name', 'Test_Environment', 'Build_Status'];
   exampleDatabase: ExampleHttpDatabase | null;
   data: Build[] = [];
-
+  selectedTreeItems:string="";
+  dtfrm:Date;
+  dtto:Date;
   resultsLength = 0;
   isLoadingResults = true;
   isRateLimitReached = false;
@@ -40,14 +43,13 @@ export class TableComponent implements AfterViewInit {
         switchMap(() => {
           this.isLoadingResults = true;
           return this.exampleDatabase!.getRepoIssues(
-            this.sort.active, this.sort.direction, this.paginator.pageIndex);
+            this.sort.active, this.sort.direction, this.paginator.pageIndex,"");
         }),
         map(data => {
           // Flip flag to show that loading has finished.
           this.isLoadingResults = false;
           this.isRateLimitReached = false;
           this.resultsLength = data.total_count;
-
           return data.builds;
         }),
         catchError(() => {
@@ -58,6 +60,73 @@ export class TableComponent implements AfterViewInit {
         })
       ).subscribe(data => this.data = data);
   }
+
+  @Input() objtree: TreeComponent;
+  filterData(){
+
+    this.selectedTreeItems=this.objtree.getSelectedApps();
+    console.log(this.dtfrm); 
+    var month = this.dtfrm.getUTCMonth() + 1; //months from 1-12
+    var day = this.dtfrm.getUTCDate();
+    var year = this.dtfrm.getUTCFullYear();
+
+    var newdate = year + "/" + month + "/" + day;
+    console.log(newdate); 
+    this.paginator.pageIndex = 0
+    merge(this.sort.sortChange, this.paginator.page)
+      .pipe(
+        startWith({}),
+        switchMap(() => {
+          this.isLoadingResults = true;
+          return this.exampleDatabase!.getRepoIssues(
+            this.sort.active, this.sort.direction, this.paginator.pageIndex,this.selectedTreeItems);
+        }),
+        map(data => {
+          // Flip flag to show that loading has finished.
+          this.isLoadingResults = false;
+          this.isRateLimitReached = false;
+          this.resultsLength = data.total_count;
+          return data.builds;
+        }),
+        catchError(() => {
+          this.isLoadingResults = false;
+          // Catch if the GitHub API has reached its rate limit. Return empty data.
+          this.isRateLimitReached = true;
+          return observableOf([]);
+        })
+      ).subscribe(data => this.data = data);
+  }
+
+  refreshData(){
+
+    this.paginator.pageIndex = 0
+    merge(this.sort.sortChange, this.paginator.page)
+      .pipe(
+        startWith({}),
+        switchMap(() => {
+          this.isLoadingResults = true;
+          return this.exampleDatabase!.getRepoIssues(
+            this.sort.active, this.sort.direction, this.paginator.pageIndex,"");
+        }),
+        map(data => {
+          // Flip flag to show that loading has finished.
+          this.isLoadingResults = false;
+          this.isRateLimitReached = false;
+          this.resultsLength = data.total_count;
+          return data.builds;
+        }),
+        catchError(() => {
+          this.isLoadingResults = false;
+          // Catch if the GitHub API has reached its rate limit. Return empty data.
+          this.isRateLimitReached = true;
+          return observableOf([]);
+        })
+      ).subscribe(data => this.data = data);
+  }
+
+
+
+
 }
 
 export interface BuildApi {
@@ -69,13 +138,12 @@ export interface BuildApi {
 /** An example database that the data source uses to retrieve data for the table. */
 export class ExampleHttpDatabase {
   constructor(private _httpClient: HttpClient) {}
-
-  getRepoIssues(sort: string, order: string, page: number): Observable<BuildApi> {
+  getRepoIssues(sort: string, order: string, page: number,apps:string): Observable<BuildApi> {
     //http://localhost:8080/api/page/?sort=Build_ID&order=asc&pg=2&sz=3
     //const href = 'https://api.github.com/search/issues';
 
     //const requestUrl =`${href}?q=repo:angular/components&sort=${sort}&order=${order}&page=${page + 1}`;
-    const requestUrl=`http://localhost:8080/api/page/?sort=${sort}&order=${order}&pg=${page + 1}&sz=3`
+    const requestUrl=`http://localhost:8080/api/page/?sort=${sort}&order=${order}&pg=${page + 1}&sz=3&app=${apps}`
     console.log(requestUrl);
     return this._httpClient.get<BuildApi>(requestUrl);
   }

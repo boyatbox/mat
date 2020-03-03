@@ -1,4 +1,26 @@
-<div class="example-container mat-elevation-z8">
+<div class="action-bar">
+
+  <mat-form-field>
+    <mat-label>From Date</mat-label>
+    <input matInput [matDatepicker]="picker1" [(ngModel)]="dtfrm">
+    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+    <mat-datepicker #picker1></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>To Date</mat-label>
+    <input matInput [matDatepicker]="picker2" [(ngModel)]="dtto">
+    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+    <mat-datepicker #picker2></mat-datepicker>
+  </mat-form-field>
+    <button mat-stroked-button (click)="refreshData()">reload
+      <mat-icon>refresh</mat-icon>
+    </button>
+    <button mat-stroked-button (click)="filterData()">filter
+      <mat-icon>filter_list</mat-icon>
+    </button>
+    <!-- <ng-content select="ng-container[action-bar-items]"></ng-content> -->
+  </div>
+<div class="example-container mat-elevation-z0">
     <div class="example-loading-shade"
          *ngIf="isLoadingResults || isRateLimitReached">
       <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
@@ -6,10 +28,7 @@
         GitHub's API rate limit has been reached. It will be reset in one minute.
       </div>
     </div>
-    <div class="action-bar">
-      <p>test</p>
-      <!-- <ng-content select="ng-container[action-bar-items]"></ng-content> -->
-    </div>
+   
     <div class="example-table-container">
      
       <table mat-table [dataSource]="data" class="example-table"
