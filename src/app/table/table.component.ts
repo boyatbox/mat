@@ -25,7 +25,8 @@ export class TableComponent implements AfterViewInit {
   resultsLength = 0;
   isLoadingResults = true;
   isRateLimitReached = false;
-
+  filter_fromdate:string="";
+  filter_todate:string="";
   @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
   @ViewChild(MatSort,{static: false}) sort: MatSort;
 
@@ -43,7 +44,7 @@ export class TableComponent implements AfterViewInit {
         switchMap(() => {
           this.isLoadingResults = true;
           return this.exampleDatabase!.getRepoIssues(
-            this.sort.active, this.sort.direction, this.paginator.pageIndex,"");
+            this.sort.active, this.sort.direction, this.paginator.pageIndex,"","","");
         }),
         map(data => {
           // Flip flag to show that loading has finished.
@@ -65,13 +66,22 @@ export class TableComponent implements AfterViewInit {
   filterData(){
 
     this.selectedTreeItems=this.objtree.getSelectedApps();
-    console.log(this.dtfrm); 
-    var month = this.dtfrm.getUTCMonth() + 1; //months from 1-12
-    var day = this.dtfrm.getUTCDate();
-    var year = this.dtfrm.getUTCFullYear();
+    //console.log(this.dtfrm); 
+    var _month = this.dtfrm.getMonth()+1; //months from 1-12
+    var month=(_month>9 ? '' : '0') + _month;
+    var _day = this.dtfrm.getDate();
+    var day=(_day>9 ? '' : '0') + _day;
+    var year = this.dtfrm.getFullYear();
+    this.filter_fromdate = year + "-" + month + "-" + day;
 
-    var newdate = year + "/" + month + "/" + day;
-    console.log(newdate); 
+    var _month = this.dtto.getMonth()+1; //months from 1-12
+    var month=(_month>9 ? '' : '0') + _month;
+    var _day = this.dtto.getDate();
+    var day=(_day>9 ? '' : '0') + _day;
+    var year = this.dtto.getFullYear();
+    this.filter_todate = year + "-" + month + "-" + day;
+
+    
     this.paginator.pageIndex = 0
     merge(this.sort.sortChange, this.paginator.page)
       .pipe(
@@ -79,7 +89,7 @@ export class TableComponent implements AfterViewInit {
         switchMap(() => {
           this.isLoadingResults = true;
           return this.exampleDatabase!.getRepoIssues(
-            this.sort.active, this.sort.direction, this.paginator.pageIndex,this.selectedTreeItems);
+            this.sort.active, this.sort.direction, this.paginator.pageIndex,this.selectedTreeItems,this.filter_fromdate,this.filter_todate);
         }),
         map(data => {
           // Flip flag to show that loading has finished.
@@ -106,7 +116,7 @@ export class TableComponent implements AfterViewInit {
         switchMap(() => {
           this.isLoadingResults = true;
           return this.exampleDatabase!.getRepoIssues(
-            this.sort.active, this.sort.direction, this.paginator.pageIndex,"");
+            this.sort.active, this.sort.direction, this.paginator.pageIndex,this.selectedTreeItems,this.filter_fromdate,this.filter_todate);
         }),
         map(data => {
           // Flip flag to show that loading has finished.
@@ -138,12 +148,12 @@ export interface BuildApi {
 /** An example database that the data source uses to retrieve data for the table. */
 export class ExampleHttpDatabase {
   constructor(private _httpClient: HttpClient) {}
-  getRepoIssues(sort: string, order: string, page: number,apps:string): Observable<BuildApi> {
+  getRepoIssues(sort: string, order: string, page: number,apps:string,_date_from:string,_date_to:string): Observable<BuildApi> {
     //http://localhost:8080/api/page/?sort=Build_ID&order=asc&pg=2&sz=3
     //const href = 'https://api.github.com/search/issues';
 
     //const requestUrl =`${href}?q=repo:angular/components&sort=${sort}&order=${order}&page=${page + 1}`;
-    const requestUrl=`http://localhost:8080/api/page/?sort=${sort}&order=${order}&pg=${page + 1}&sz=3&app=${apps}`
+    const requestUrl=`http://localhost:8080/api/page/?sort=${sort}&order=${order}&pg=${page + 1}&sz=3&app=${apps}&dtfrm=${_date_from}&dtto=${_date_to}`
     console.log(requestUrl);
     return this._httpClient.get<BuildApi>(requestUrl);
   }
