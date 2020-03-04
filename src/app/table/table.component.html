@@ -17,15 +17,12 @@
   <button mat-flat-button (click)="filterData()">Filter
     <mat-icon>filter_list</mat-icon>
   </button>
-<!--  <mat-card-actions>
-    <button mat-stroked-button color="primary" (click)="updateActualRCA($event)">Update</button>
-    <button mat-stroked-button color="accent">Approve</button>
-  </mat-card-actions> -->
 </mat-card>
-<!-- <div class="action-bar">
-  <p>test</p>
+<div class="container">
+  <div>Card</div>
+  <div class="fill"></div>
+  <div>Title</div>
 </div>
--->
 <div class="example-container mat-elevation-z1">
   <div class="example-loading-shade" *ngIf="isLoadingResults || isRateLimitReached">
     <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
