@@ -204,10 +204,6 @@ export class TableComponent implements AfterViewInit {
   }
 }
 
- 
-
- 
-
 export interface BuildApi {
   builds: Build[];
   total_count: number;
