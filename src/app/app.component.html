@@ -1,30 +1,27 @@
-<p></p>
-<button mat-stroked-button (click)="loadTable()">
-  <mat-icon>refresh</mat-icon>
-</button>
-<button mat-stroked-button (click)="prevRecords()">
-  <mat-icon>navigate_before</mat-icon>
-</button>
-<button mat-stroked-button (click)="nextRecords()">
-  <mat-icon>navigate_next</mat-icon>
-</button>
-<button mat-stroked-button [matBadge]="selectedRowCnt" matBadgePosition="after" matBadgeColor="accent"
-  (click)="openUpdateDialog()">
-  <mat-icon>edit</mat-icon>
-</button>
+<mat-toolbar class="mat-elevation-z5" color="primary">
 
-<div class="table-responsive">
+  <mat-toolbar-row>
 
-</div>
+    <mat-icon>dashboard</mat-icon><span> Dashboard</span>
 
-<mat-divider></mat-divider>
+  </mat-toolbar-row>
+
+</mat-toolbar>
+
+ 
 
 <div class="row">
-  <div class="column left">
-    <app-tree #userInformation></app-tree>
-  </div>
-  <div class="column right">
-    <app-table [objtree]="userInformation"></app-table>
-  </div>
-</div>
 
+    <div class="column left">
+
+      <app-tree #userInformation></app-tree>
+
+    </div>
+
+    <div class="column right">
+
+      <app-table [objtree]="userInformation"></app-table>
+
+    </div>
+
+</div>

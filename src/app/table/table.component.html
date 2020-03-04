@@ -1,5 +1,4 @@
-<div class="action-bar">
-
+<mat-card class="mat-elevation-z1 card-container">
   <mat-form-field>
     <mat-label>From Date</mat-label>
     <input matInput [matDatepicker]="picker1" [(ngModel)]="dtfrm">
@@ -12,75 +11,116 @@
     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
     <mat-datepicker #picker2></mat-datepicker>
   </mat-form-field>
-    <button mat-stroked-button (click)="refreshData()">reload
-      <mat-icon>refresh</mat-icon>
-    </button>
-    <button mat-stroked-button (click)="filterData()">filter
-      <mat-icon>filter_list</mat-icon>
-    </button>
-    <!-- <ng-content select="ng-container[action-bar-items]"></ng-content> -->
-  </div>
-<div class="example-container mat-elevation-z0">
-    <div class="example-loading-shade"
-         *ngIf="isLoadingResults || isRateLimitReached">
-      <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
-      <div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
-        GitHub's API rate limit has been reached. It will be reset in one minute.
-      </div>
+  <button mat-flat-button (click)="refreshData()">Sync
+      <mat-icon>sync</mat-icon>
+  </button>
+  <button mat-flat-button (click)="filterData()">Filter
+    <mat-icon>filter_list</mat-icon>
+  </button>
+<!--  <mat-card-actions>
+    <button mat-stroked-button color="primary" (click)="updateActualRCA($event)">Update</button>
+    <button mat-stroked-button color="accent">Approve</button>
+  </mat-card-actions> -->
+</mat-card>
+<!-- <div class="action-bar">
+  <p>test</p>
+</div>
+-->
+<div class="example-container mat-elevation-z1">
+  <div class="example-loading-shade" *ngIf="isLoadingResults || isRateLimitReached">
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+    <div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
+      Records not found
     </div>
-   
-    <div class="example-table-container">
-     
-      <table mat-table [dataSource]="data" class="example-table"
-             matSort matSortActive="Build_ID" matSortDisableClear matSortDirection="asc">
-             <div>
-
-              <span>...Anything can be passed in here...</span>
-        
-          </div>
-        
-         <!-- Checkbox Column
-        <ng-container matColumnDef="select">
-          <th mat-header-cell *matHeaderCellDef>
-            <mat-checkbox (change)="$event ? masterToggle() : null"
-                          [checked]="selection.hasValue() && isAllSelected()"
-                          [indeterminate]="selection.hasValue() && !isAllSelected()">
-            </mat-checkbox>
-          </th>
-          <td mat-cell *matCellDef="let row">
-            <mat-checkbox (click)="$event.stopPropagation()"
-                          (change)="$event ? selection.toggle(row) : null"
-                          [checked]="selection.isSelected(row)">
-            </mat-checkbox>
-          </td>
-        </ng-container>
-         -->
-        <ng-container matColumnDef="Build_ID">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Build_ID</th>
-          <td mat-cell *matCellDef="let row">{{row.Build_ID}}</td>
-        </ng-container>
-  
-        <ng-container matColumnDef="Test_Environment">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Test_Environment</th>
-          <td mat-cell *matCellDef="let row">{{row.Test_Environment}}</td>
-        </ng-container>
-  
-        <ng-container matColumnDef="CI_Application_Name">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>CI_Application_Name</th>
-          <td mat-cell *matCellDef="let row">{{row.CI_Application_Name}}</td>
-        </ng-container>
-  
-        <ng-container matColumnDef="Build_Status">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
-            Build_Status
-          </th>
-          <td mat-cell *matCellDef="let row">{{row.Build_Status}}</td>
-        </ng-container>
-  
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
-    </div>
-  
-    <mat-paginator [length]="resultsLength" [pageSize]="3"></mat-paginator>
   </div>
+  <div class="example-table-container">
+    <table mat-table [dataSource]="data" class="example-table" matSort matSortActive="Start_DateTimeStamp"
+      matSortDisableClear matSortDirection="asc">
+      <!-- Checkbox Column -->
+      <ng-container matColumnDef="Select">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()">
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row.Build_ID) : null"
+            [checked]="selection.isSelected(row.Build_ID)">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+      <!--  <mat-header-cell *matHeaderCellDef class="checkboxCell">
+          <mat-checkbox
+              (change)="$event ? masterToggle() : null;"
+              [checked]="selection.hasValue() && isAllSelected()"
+              [indeterminate]="selection.hasValue() && !isAllSelected()">
+          </mat-checkbox>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row" class="checkboxCell">
+          <mat-checkbox
+              (click)="$event.stopPropagation()"
+              (change)="$event ? selection.toggle(row.Build_ID) : null"
+              [checked]="selection.isSelected(row.Build_ID)">
+          </mat-checkbox>
+      </mat-cell> -->
+      <!-- //'Build_ID','Portfolio_Name','ValueStream_Name', 'CI_Application_Name', 'Test_Environment', 'Build_Status','Date','Predicted_RCA','Actual_RCA'];  -->
+      <ng-container matColumnDef="Build_ID">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Build_ID</th>
+        <td mat-cell *matCellDef="let row">{{row.Build_ID}}</td>
+      </ng-container>
+      <ng-container matColumnDef="Portfolio_Name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Portfolio</th>
+        <td mat-cell *matCellDef="let row">{{row.Portfolio_Name}}</td>
+      </ng-container>
+      <ng-container matColumnDef="ValueStream_Name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Value Stream</th>
+        <td mat-cell *matCellDef="let row">{{row.ValueStream_Name}}</td>
+      </ng-container>
+      <ng-container matColumnDef="CI_Application_Name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Application</th>
+        <td mat-cell *matCellDef="let row">{{row.CI_Application_Name}}</td>
+      </ng-container>
+      <ng-container matColumnDef="Test_Environment">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Environment</th>
+        <td mat-cell *matCellDef="let row">{{row.Test_Environment}}</td>
+      </ng-container>
+      <ng-container matColumnDef="Build_Status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Status </th>
+        <td mat-cell *matCellDef="let row">{{row.Build_Status | titlecase}}</td>
+      </ng-container>
+      <ng-container matColumnDef="Start_DateTimeStamp">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Start Date </th>
+        <td mat-cell *matCellDef="let row">{{row.Start_DateTimeStamp | date: 'MM/dd/yyyy'}}</td>
+      </ng-container>
+      <ng-container matColumnDef="Predicted_RCA">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Predicted RCA </th>
+        <td mat-cell *matCellDef="let row">{{row.Predicted_RCA}}</td>
+      </ng-container>
+      <ng-container matColumnDef="Actual_RCA">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Actual RCA </th>
+        <td mat-cell *matCellDef="let row">{{row.Actual_RCA}}</td>
+      </ng-container>
+      <ng-container matColumnDef="RCA_Review_Status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Review Status </th>
+        <td mat-cell *matCellDef="let row"><span class="reviewstatusdot" [class.statuspending]="row.RCA_Review_Status==='Pending'" [class.statusapproved]="row.RCA_Review_Status==='Approved'"></span>{{row.RCA_Review_Status}}</td>
+      </ng-container>
+      <!-- Action Column -->
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let row">
+          <button mat-flat-button (click)="onApprove(row.Build_ID)">Approve</button>|
+          <button mat-flat-button [satPopoverAnchor]="editpopover" (click)="editpopover.open()">
+            Edit
+            <sat-popover #editpopover hasBackdrop xAlign="before" yAlign="start" scrollStrategy="block">
+              <inline-edit [value]="row.Build_ID"  (myEvent)="refreshData($event)"></inline-edit>
+            </sat-popover>
+          </button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+  <mat-paginator [length]="resultsLength" [pageSize]="pageSize" [showFirstLastButtons]="true"
+    [pageSizeOptions]="pageSizeOptions" (page)="changePage($event)"></mat-paginator>
+</div>

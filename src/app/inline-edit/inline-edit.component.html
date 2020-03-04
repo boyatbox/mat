@@ -1,0 +1,23 @@
+<div>
+
+    <form>
+
+        <div class="mat-subheading-2">Enter actual RCA</div>
+
+        <mat-form-field>
+
+            <input matInput name="actualrca" [(ngModel)]="fieldvalue">
+
+        </mat-form-field>
+
+        <div class="actions">
+
+            <button mat-button type="button" color="primary" (click)="onCancel()">CANCEL</button>
+
+            <button mat-button type="button" color="primary" (click)="onSave()" >SAVE</button>
+
+        </div>
+
+    </form>
+
+</div>

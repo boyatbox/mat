@@ -1,25 +1,28 @@
+//^(\s)*$\n
 //https://medium.com/vendasta/wrapping-angular-material-table-styling-it-once-drag-drop-sorting-b1765c995b40
-import { Component, OnInit, ViewChild,ViewChildren } from '@angular/core';
-import { Build,DataService } from './data.service';
-import {PageEvent} from '@angular/material/paginator';
-import {TreeComponent} from './tree/tree.component';
 
+import { Component, OnInit, ViewChild,ViewChildren } from '@angular/core';
+
+import { Build,DataService } from './data.service';
+
+import {PageEvent} from '@angular/material/paginator';
+
+import {TreeComponent} from './tree/tree.component';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
 
+export class AppComponent {
   //@ViewChildren('AppComponent') tree: AppComponent;
   @ViewChild("userInformation",{static:true}) tree: TreeComponent;
-
   private startRow:number;
   private endrow:number;
   selectedRowCnt=0;
   builds : Build[] = [];
   selectedBuild: Build[] = [];
-  public columns = ['Build_ID', 'Portfolio_Name', 'ValueStream_Name', 'CI_Application_Name', 'Test_Environment', 'Test_Type', 'Start_DateTimeStamp', 'Build_Status'];
+  public columns = ['Build_ID', 'Portfolio_Name', 'ValueStream_Name', 'CI_Application_Name', 'Test_Environment', 'Test_Type', 'Start_DateTimeStamp', 'Build_Status','RCA_Review_Status'];
   selectedBuildId="";
   constructor(private buildservice: DataService) { }
   length = 100;
@@ -29,7 +32,7 @@ export class AppComponent {
     this.startRow=1;
     this.endrow=10;
   }
-  loadTable(){
+/*  loadTable(){
     //console.log("selected#"+this.tree.getSelectedApps());
     console.log("selected#"+this.tree.getSelectedApps());
     this.buildservice.getBuilds(this.startRow,this.endrow).subscribe
@@ -38,10 +41,8 @@ export class AppComponent {
       {
         this.builds = response
       },
-      (error) => console.log(error) 
+      (error) => console.log(error)
     )
-    
-    
   }
     // MatPaginator Output
     pageEvent: PageEvent;
@@ -71,11 +72,9 @@ export class AppComponent {
       this.selectedBuildId=objBuild.Build_ID;
   }
   nextPage(){
-  }
-
+  } */
   ngAfterViewInit() {
     //console.log("selected#"+this.childComponentReference.getSelectedApps());
     //console.log("selected#"+this.tree);
   }
-
 }

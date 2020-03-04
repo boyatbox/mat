@@ -23,7 +23,7 @@ export class DataService {
   }
 
   getAppTree(): Observable<any[]> {
-    var serviceUrl: string = `http://localhost:8080/api/json`;
+    var serviceUrl: string = `http://localhost:8080/api/apps`;
     return this.http.get<any[]>(serviceUrl);
   }
 }
