@@ -1,19 +1,11 @@
 import { SelectionModel } from '@angular/cdk/collections';
-
 import { HttpClient } from '@angular/common/http';
-
 import { Component, ViewChild, AfterViewInit, OnInit,Input, ChangeDetectorRef } from '@angular/core';
-
 import { MatPaginator } from '@angular/material/paginator';
-
 import { MatSort } from '@angular/material/sort';
-
 import { merge, Observable, of as observableOf } from 'rxjs';
-
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
-
 import {TreeComponent} from './../tree/tree.component';
-
 import { Build, DataService } from './../data.service';
 /**
 * @title Table retrieving data through HTTP
@@ -28,7 +20,6 @@ import { Build, DataService } from './../data.service';
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css']
 })
-
 export class TableComponent implements AfterViewInit {
   pageSizeOptions: number[] = [10, 25, 100];
   pageSize = 10;
@@ -96,8 +87,6 @@ export class TableComponent implements AfterViewInit {
   deletePhone(t){
     console.log("test==="+t);
   }
-
-
   changePage(event) {
     this.pageSize = event.pageSize;
     console.log(this.pageSize);
@@ -203,13 +192,11 @@ export class TableComponent implements AfterViewInit {
     this._httpClient.post<any>('http://localhost:8080/api/approve', { "id": build_Id }).subscribe(data => {this.refreshData();})
   }
 }
-
 export interface BuildApi {
   builds: Build[];
   total_count: number;
 }
 /** An example database that the data source uses to retrieve data for the table. */
-
 export class ExampleHttpDatabase {
   constructor(private _httpClient: HttpClient) { }
   getRepoIssues(sort: string, order: string, page: number,size:number,apps:string,_date_from:string,_date_to:string): Observable<BuildApi> {
