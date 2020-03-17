@@ -16,9 +16,35 @@
 .one {
   background-color: lightblue;
   margin:0px;
+  border: solid;
 }
 
 .two {
-  background-color: lightgreen;
+  background-color: #f0f0f0;
   margin:0px;
+  border: solid;
 } 
+
+.table {
+  display: flex;
+  border: solid;
+}
+
+.row {
+  flex: 1;
+  display: flex;
+}
+
+.row:first-of-type {
+  flex-flow: wrap;
+}
+
+.row .rowspan2 {
+  flex: 1 1 100%;
+}
+
+.row div {
+  border: solid;
+  padding: 1em;
+  flex: 1;
+}

@@ -1,4 +1,4 @@
-<mat-card class="mat-elevation-z1 card-container">
+<div  class="action-bar">
   <mat-form-field>
     <mat-label>From Date</mat-label>
     <input matInput [matDatepicker]="picker1" [(ngModel)]="dtfrm">
@@ -35,12 +35,13 @@
     <button mat-stroked-button color="primary" (click)="updateActualRCA($event)">Update</button>
     <button mat-stroked-button color="accent">Approve</button>
   </mat-card-actions> -->
-</mat-card>
+</div>
 <!-- <div class="action-bar">
   <p>test</p>
 </div>
  -->
-<div class="example-container mat-elevation-z1">
+<!-- <div class="example-container mat-elevation-z1"> -->
+<div>
   <div class="example-loading-shade" *ngIf="isLoadingResults || isRateLimitReached">
     <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
     <div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
