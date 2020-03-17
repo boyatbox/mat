@@ -11,23 +11,40 @@
     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
     <mat-datepicker #picker2></mat-datepicker>
   </mat-form-field>
-  <button mat-flat-button (click)="refreshData()">Sync
+  <mat-form-field>
+    <mat-label>Predicted RCA</mat-label>
+    <!-- <mat-select  [formControl]="PredictedRCA" multiple disableRipple > -->
+    <mat-select  [(ngModel)]="model_predicted_rca" multiple disableRipple>
+    <mat-option *ngFor="let rca of PredictedRCAList" [value]="rca">{{rca}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Build Status</mat-label>
+    <mat-select [(ngModel)]="selected_build_status" disableRipple>
+      <mat-option *ngFor="let buildStatus of buildStatusList" [value]="buildStatus.value">
+        {{buildStatus.viewValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <!--  <button mat-flat-button (click)="refreshData()">Sync
       <mat-icon>sync</mat-icon>
-  </button>
-  <button mat-flat-button (click)="filterData()">Filter
-    <mat-icon>filter_list</mat-icon>
-  </button>
+  </button> -->
+  <button mat-button (click)="filterData()">Filter</button>
+  <!--   <mat-card-actions align="end">
+        <mat-icon>filter_list</mat-icon> 
+    <button mat-stroked-button color="primary" (click)="updateActualRCA($event)">Update</button>
+    <button mat-stroked-button color="accent">Approve</button>
+  </mat-card-actions> -->
 </mat-card>
-<div class="container">
-  <div>Card</div>
-  <div class="fill"></div>
-  <div>Title</div>
+<!-- <div class="action-bar">
+  <p>test</p>
 </div>
+ -->
 <div class="example-container mat-elevation-z1">
   <div class="example-loading-shade" *ngIf="isLoadingResults || isRateLimitReached">
     <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
     <div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
-      Records not found
+        No records found
     </div>
   </div>
   <div class="example-table-container">
@@ -37,12 +54,12 @@
       <ng-container matColumnDef="Select">
         <th mat-header-cell *matHeaderCellDef>
           <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
-            [indeterminate]="selection.hasValue() && !isAllSelected()">
+            [indeterminate]="selection.hasValue() && !isAllSelected()" color="primary">
           </mat-checkbox>
         </th>
         <td mat-cell *matCellDef="let row">
           <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row.Build_ID) : null"
-            [checked]="selection.isSelected(row.Build_ID)">
+            [checked]="selection.isSelected(row.Build_ID)" color="primary">
           </mat-checkbox>
         </td>
       </ng-container>
@@ -99,17 +116,29 @@
       </ng-container>
       <ng-container matColumnDef="RCA_Review_Status">
         <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Review Status </th>
-        <td mat-cell *matCellDef="let row"><span class="reviewstatusdot" [class.statuspending]="row.RCA_Review_Status==='Pending'" [class.statusapproved]="row.RCA_Review_Status==='Approved'"></span>{{row.RCA_Review_Status}}</td>
+        <td mat-cell *matCellDef="let row"><span class="reviewstatusdot"
+            [class.statuspending]="row.RCA_Review_Status==='Pending'"
+            [class.statusapproved]="row.RCA_Review_Status==='Approved'"></span>{{row.RCA_Review_Status}}</td>
       </ng-container>
       <!-- Action Column -->
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef> Actions </th>
         <td mat-cell *matCellDef="let row">
-          <button mat-flat-button (click)="onApprove(row.Build_ID)">Approve</button>|
+          <button mat-flat-button (click)="onApprove(row.Build_ID)">Approve</button>
+  <!--         <button mat-mini-fab class="mat-elevation-z0 my-fab" mat-fab color="" aria-label="Approve">
+              <mat-icon>check_circle_outline</mat-icon>
+          </button>
+          <button mat-mini-fab class="mat-elevation-z0 my-fab" mat-fab color="" aria-label="Edit" [satPopoverAnchor]="editpopover" (click)="editpopover.open()">
+              <mat-icon>edit</mat-icon>
+              <sat-popover #editpopover hasBackdrop xAlign="before" yAlign="start" scrollStrategy="block">
+                <inline-edit [value]="row.Build_ID" (myEvent)="refreshData($event)"></inline-edit>
+              </sat-popover>
+          </button>
+ -->
           <button mat-flat-button [satPopoverAnchor]="editpopover" (click)="editpopover.open()">
             Edit
             <sat-popover #editpopover hasBackdrop xAlign="before" yAlign="start" scrollStrategy="block">
-              <inline-edit [value]="row.Build_ID"  (myEvent)="refreshData($event)"></inline-edit>
+              <inline-edit [value]="row.Build_ID" (myEvent)="refreshData($event)"></inline-edit>
             </sat-popover>
           </button>
         </td>

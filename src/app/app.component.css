@@ -1,47 +1,24 @@
-.mat-toolbar {
+/* 
+.box {         
+  color:white;
+  padding:10px;
+  text-align:center;
+  border-style: inset;
+}
+.green {
+  background:green;
+}
+.blue {
+  background:blue;
+}
+*/
 
-  position: relative;
-
-  z-index: 2;
-
+.one {
+  background-color: lightblue;
+  margin:0px;
 }
 
- 
-
-* {
-
-  box-sizing: border-box;
-
-}
-
- 
-
-.column {
-
-  float: left;
-
-  margin-top: 0px;
-
-  height: 100%; /* Should be removed. Only for demonstration */
-
- 
-
-}
-
- 
-
-.left {
-
-  width: 12%;
-
-}
-
- 
-
-.right {
-
-  width: 88%;
-
-  /* border: solid 1px; */
-
-}
+.two {
+  background-color: lightgreen;
+  margin:0px;
+} 

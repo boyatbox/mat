@@ -61,6 +61,8 @@ import { SatPopoverModule } from '@ncstate/sat-popover';
 import { FormsModule } from '@angular/forms';
 import { InlineEditComponent } from './inline-edit/inline-edit.component';
 
+import { FlexLayoutModule } from '@angular/flex-layout';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -74,11 +76,10 @@ import { InlineEditComponent } from './inline-edit/inline-edit.component';
     //MDCDataTable,
     A11yModule,
     HttpClientModule,
-
     SatPopoverModule,
 
     FormsModule,
-   // FlexLayoutModule,
+    FlexLayoutModule,
 
     //ClipboardModule,
     CdkStepperModule,
