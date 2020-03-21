@@ -1,16 +1,10 @@
 /* Structure */
-.action-bar {
+.filter-topbar {
   background: white;
   padding: 5px 8px;
   border-bottom: 4px solid rgba(0, 0, 0, 0.12);
 }
 
- 
-
-mat-card{
-  margin-bottom: 1px;
-  border: 1px solid rgba(0, 0, 0, 0.12);
-}
 .mat-header-row {
   background-color: #f9f9f9;
 }

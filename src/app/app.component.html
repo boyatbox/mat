@@ -1,60 +1,6 @@
-<mat-toolbar class="mat-elevation-z5" color="primary">
+<mat-toolbar class="mat-elevation-z0" color="primary">
   <mat-toolbar-row>
     <mat-icon>dashboard</mat-icon><span> Dashboard</span>
   </mat-toolbar-row>
 </mat-toolbar>
-<!--
-<mat-grid-list cols="10" rowHeight="100px">
-  <mat-grid-tile colspan="2" rowspan="1" class="one">
-    <app-tree #userInformation></app-tree>
-  </mat-grid-tile>
-  <mat-grid-tile colspan="8" rowspan="1" class="two">
-    <app-table [objtree]="userInformation"></app-table>
-  </mat-grid-tile>
-</mat-grid-list>
- -->
-<!-- 
- <mat-toolbar color="primary">
-  <span>Nav</span>
-  <div fxLayout="row" fxFlexAlign="end">
-      <a mat-button>Item 1</a>
-      <a mat-button>Item 2</a>
-      <a mat-button>Item 3</a>
-      <a mat-button>Item 4</a>
-  </div>
-</mat-toolbar> -->
-
-<div fxLayout="row" fxLayout.xs="column">
-  <div class="one" fxFlex="15%"><app-tree #userInformation></app-tree></div>
-  <div class="two" fxFlex="85%"><app-table [objtree]="userInformation"></app-table></div>
-</div>
-
-<!--   <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="left">
-    <div fxFlex="20%">
-      <img mat-card-image class="img" src="https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/960w/8V46UZCS0V.jpg">
-    </div>
-    <div fxFlex="20%">
-      <img mat-card-image class="img" src="https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/960w/LTLE4QGRVQ.jpg">
-    </div>
-    <div fxFlex="20%">
-      <img mat-card-image class="img" src="https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/960w/R926LU1YEA.jpg">
-    </div>
-    <div fxFlex="20%">
-      <img mat-card-image class="img" src="https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/960w/U9PP3KXXY2.jpg">
-    </div>
-  </div> -->
-
-
-<!-- <div fxLayout="row" fxLayoutAlign="start center">
-  <div fxFlex="50%" class="a">a</div>
-  <div fxFlex="50%" class="b">b</div>
-</div> -->
-
-<!-- <div class="row">
-  <div class="column left">
-    <app-tree #userInformation></app-tree>
-  </div>
-  <div class="column right">
-    <app-table [objtree]="userInformation"></app-table>
-  </div>
-</div> -->
+<app-tblmain></app-tblmain>

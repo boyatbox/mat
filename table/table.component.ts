@@ -22,6 +22,10 @@ import {FormControl, NgModel} from '@angular/forms';
   styleUrls: ['./table.component.css']
 })
 export class TableComponent implements AfterViewInit {
+
+
+
+
   //filter-Listbox
   PredictedRCA = new FormControl();
   PredictedRCAList: string[] = ['Script Issue', 'Application upgrade', 'Environment Issue'];

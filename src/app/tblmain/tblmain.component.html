@@ -1,0 +1,279 @@
+<div fxLayout="row" class="container">
+    <!-- FILTER   -->
+    <div class="left-tree" fxFlex="18%">
+        <button mat-stroked-button color="primary" mat-button (click)="filterData()">Apply</button>
+        <button mat-stroked-button color="primary" mat-button (click)="clearfilters()">Clear</button>
+        <br>
+        <mat-form-field>
+            <mat-label>From Date</mat-label>
+            <input matInput [matDatepicker]="picker1" [(ngModel)]="dtfrm">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>To Date</mat-label>
+            <input matInput [matDatepicker]="picker2" [(ngModel)]="dtto">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+        <mat-accordion>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Application
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <app-tree #childAppTree></app-tree>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Predicted RCA
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <mat-selection-list [(ngModel)]="selectedOptions_PredictedRCA"
+                    (ngModelChange)="onNgModelChange_PredictedRCA($event)">
+                    <mat-list-option *ngFor="let predictedrca of listItem_PredictedRCA" [value]='predictedrca'>
+                        {{predictedrca}}
+                    </mat-list-option>
+                </mat-selection-list>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Actual RCA
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <mat-selection-list [(ngModel)]="selectedOptions_ActualRCA"
+                    (ngModelChange)="onNgModelChange_ActualRCA($event)">
+                    <mat-list-option *ngFor="let actualrca of listItem_ActualRCA" [value]='actualrca'>
+                        {{actualrca}}
+                    </mat-list-option>
+                </mat-selection-list>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Environment
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <mat-selection-list [(ngModel)]="selectedOptions_Environemnt"
+                    (ngModelChange)="onNgModelChange_Environemnt($event)">
+                    <mat-list-option *ngFor="let env of listItem_Environemnt" [value]='env'>
+                        {{env}}
+                    </mat-list-option>
+                </mat-selection-list>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    Type
+                </mat-expansion-panel-header>
+                <mat-selection-list [(ngModel)]="selectedOptions_TestType"
+                    (ngModelChange)="onNgModelChange_TestType($event)">
+                    <mat-list-option *ngFor="let testtype of listItem_TestType" [value]='testtype'>
+                        {{testtype}}
+                    </mat-list-option>
+                </mat-selection-list>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    Testing Tool
+                </mat-expansion-panel-header>
+                <mat-selection-list [(ngModel)]="selectedOptions_TestingTool"
+                    (ngModelChange)="onNgModelChange_TestingTool($event)">
+                    <mat-list-option *ngFor="let testtool of listItem_TestingTool" [value]='testtool'>
+                        {{testtool}}
+                    </mat-list-option>
+                </mat-selection-list>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    Trigger Type
+                </mat-expansion-panel-header>
+                <mat-selection-list [(ngModel)]="selectedOptions_TriggerType"
+                    (ngModelChange)="onNgModelChange_TriggerType($event)">
+                    <mat-list-option *ngFor="let triggertool of listItem_TriggerType" [value]='triggertool'>
+                        {{triggertool}}
+                    </mat-list-option>
+                </mat-selection-list>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    Build Status
+                </mat-expansion-panel-header>
+                <mat-selection-list [(ngModel)]="selectedOptions_BuildStatus"
+                    (ngModelChange)="onNgModelChange_BuildStatus($event)">
+                    <mat-list-option *ngFor="let buildstatus of listItem_BuildStatus" [value]='buildstatus'>
+                        {{buildstatus}}
+                    </mat-list-option>
+                </mat-selection-list>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    Review Status
+                </mat-expansion-panel-header>
+                <mat-selection-list [(ngModel)]="selectedOptions_ReviewStatus"
+                    (ngModelChange)="onNgModelChange_ReviewStatus($event)">
+                    <mat-list-option *ngFor="let reviewstatus of listItem_ReviewStatus" [value]='reviewstatus'>
+                        {{reviewstatus}}
+                    </mat-list-option>
+                </mat-selection-list>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    POC
+                </mat-expansion-panel-header>
+                <mat-selection-list [(ngModel)]="selectedOptions_Owner"
+                    (ngModelChange)="onNgModelChange_Owner($event)">
+                    <mat-list-option *ngFor="let owner of listItem_Owner" [value]='owner'>
+                        {{owner}}
+                    </mat-list-option>
+                </mat-selection-list>
+            </mat-expansion-panel> 
+
+        </mat-accordion>
+    </div>
+
+
+    <!-- TABLLE   -->
+    <div class="right-table" fxFlex>
+        <div class="right-table-header">
+            <button mat-icon-button mat-button>
+                <mat-icon>cached</mat-icon>
+            </button>
+            <button mat-icon-button mat-button>
+                <mat-icon>get_app</mat-icon>
+            </button>
+            <button mat-icon-button mat-button>Search</button>
+
+        </div>
+        <div class="right-table-Info"></div>
+        <div class="right-table-Stat"></div>
+
+        <div>
+            <div class="example-loading-shade" *ngIf="isLoadingResults || isRateLimitReached">
+                <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+                <div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
+                    No records found
+                </div>
+            </div>
+            <div class="example-table-container">
+                <table mat-table [dataSource]="data" class="example-table" matSort matSortActive="Start_DateTimeStamp"
+                    matSortDisableClear matSortDirection="asc">
+                    <ng-container matColumnDef="Select">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <mat-checkbox (change)="$event ? masterToggle() : null"
+                                [checked]="selection.hasValue() && isAllSelected()"
+                                [indeterminate]="selection.hasValue() && !isAllSelected()" color="primary">
+                            </mat-checkbox>
+                        </th>
+                        <td mat-cell *matCellDef="let row">
+                            <mat-checkbox (click)="$event.stopPropagation()"
+                                (change)="$event ? selection.toggle(row.Build_ID) : null"
+                                [checked]="selection.isSelected(row.Build_ID)" color="primary">
+                            </mat-checkbox>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="Build_ID">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Build_ID</th>
+                        <td mat-cell *matCellDef="let row">{{row.Build_ID}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="Portfolio_Name">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Portfolio</th>
+                        <td mat-cell *matCellDef="let row">{{row.Portfolio_Name}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="ValueStream_Name">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Value Stream</th>
+                        <td mat-cell *matCellDef="let row">{{row.ValueStream_Name}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="CI_Application_Name">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Application</th>
+                        <td mat-cell *matCellDef="let row">{{row.CI_Application_Name}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="Test_Environment">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Environment</th>
+                        <td mat-cell *matCellDef="let row">{{row.Test_Environment}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="Build_Status">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Status </th>
+                        <td mat-cell *matCellDef="let row">{{row.Build_Status | titlecase}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="Start_DateTimeStamp">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Start Date </th>
+                        <td mat-cell *matCellDef="let row">{{row.Start_DateTimeStamp | date: 'mediumDate'}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="Predicted_RCA">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Predicted RCA </th>
+                        <td mat-cell *matCellDef="let row">{{row.Predicted_RCA}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="Actual_RCA">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Actual RCA </th>
+                        <td mat-cell *matCellDef="let row">{{row.Actual_RCA}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="RCA_Review_Status">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Review Status </th>
+                        <td mat-cell *matCellDef="let row"><span class="reviewstatusdot"
+                                [class.statuspending]="row.RCA_Review_Status==='Pending'"
+                                [class.statusapproved]="row.RCA_Review_Status==='Approved'"></span>{{row.RCA_Review_Status}}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="action">
+
+                        <th mat-header-cell *matHeaderCellDef> Actions </th>
+                        <td mat-cell *matCellDef="let row">
+                            <button mat-icon-button [matMenuTriggerFor]="tablemenu" aria-label="Actions menu">
+                                <mat-icon>more_vert</mat-icon>
+                            </button>
+                            <mat-menu #tablemenu="matMenu">
+                                <button mat-menu-item (click)="onApprove(row.Build_ID)">
+                                    <mat-icon>check_circle</mat-icon>
+                                    <span>Approve RCA</span>
+                                </button>
+                                <button mat-menu-item [satPopoverAnchor]="editpopover" (click)="editpopover.open()">
+                                    <mat-icon>edit</mat-icon>
+                                    <span>Edit RCA</span>
+                                    <sat-popover #editpopover hasBackdrop xAlign="before" yAlign="start"
+                                        scrollStrategy="block">
+                                        <inline-edit [value]="row.Build_ID" (myEvent)="refreshData($event)"></inline-edit>
+                                    </sat-popover>
+                                </button>
+                                <button mat-menu-item (click)="onArchive(row.Build_ID)">
+                                    <mat-icon>archive</mat-icon>
+                                    <span>Archive</span>
+                                </button>
+                                <button mat-menu-item (click)="onArchive(row.Build_ID)">
+                                    <mat-icon>open_in_new</mat-icon>
+                                    <span>Open</span>
+                                </button>
+                            </mat-menu>
+
+                            <!-- <button mat-icon-button (click)="onApprove(row.Build_ID)" matTooltip="Approve RCA">
+                                <mat-icon>check_circle</mat-icon>
+                            </button>
+                            <button mat-icon-button [satPopoverAnchor]="editpopover" (click)="editpopover.open()"
+                                matTooltip="Edit RCA">
+                                <mat-icon>edit</mat-icon>
+                                <sat-popover #editpopover hasBackdrop xAlign="before" yAlign="start"
+                                    scrollStrategy="block">
+                                    <inline-edit [value]="row.Build_ID" (myEvent)="refreshData($event)"></inline-edit>
+                                </sat-popover>
+                            </button>
+                            <button mat-icon-button aria-label="Archive" (click)="onArchive(row.Build_ID)"
+                                matTooltip="Archive">
+                                <mat-icon>archive</mat-icon>
+                            </button>
+                            <button mat-icon-button aria-label="Open" (click)="onArchive(row.Build_ID)"
+                                matTooltip="Open">
+                                <mat-icon>open_in_new</mat-icon>
+                            </button> -->
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+            </div>
+            <mat-paginator [length]="resultsLength" [pageSize]="pageSize" [showFirstLastButtons]="true"
+                [pageSizeOptions]="pageSizeOptions" (page)="changePage($event)"></mat-paginator>
+        </div>
+    </div>
+</div>

@@ -290,4 +290,12 @@ export class TreeComponent implements OnInit {
     return (arr.join());
   }
 
+  clearSelection(){
+    this.checklistSelection = new SelectionModel<TodoItemFlatNode>(true);
+/*     this.childTree.clearSelection();
+    this.selectedTreeItems = this.childTree.getSelectedApps(); */
+    //this.selectedTreeItems = this.childTree.clearSelection();
+  }
+
+
 }

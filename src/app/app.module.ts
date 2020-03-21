@@ -54,7 +54,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
 import {BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TreeComponent } from './tree/tree.component';
-import { TableComponent } from './table/table.component';
+//import { TableComponent } from './table/table.component';
 
 import { SatPopoverModule } from '@ncstate/sat-popover';
 
@@ -62,13 +62,15 @@ import { FormsModule } from '@angular/forms';
 import { InlineEditComponent } from './inline-edit/inline-edit.component';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { TblmainComponent } from './tblmain/tblmain.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TreeComponent,
-    TableComponent,
+    //TableComponent,
     InlineEditComponent,
+    TblmainComponent,
   ],
   imports: [
     BrowserModule,
