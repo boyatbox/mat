@@ -24,6 +24,15 @@
 .right-table-header{
   border:solid 1px black;
   height:30px;
+  padding-bottom: 10px;
+}
+.right-table-Info{
+  border:solid 1px black;
+  height:30px;
+}
+.right-table-Stat{
+  border:solid 1px black;
+  height:30px;
 }
 
 /* width */
@@ -64,7 +73,15 @@ table{
     overflow: auto; */
     border:solid 1px black;
   }
- 
+  .table-container-parent {
+    position: relative;
+ /*    max-height: 100%;
+    width:100%;
+    overflow: auto; */
+  
+    border:solid 1px black;
+  }
+
   .example-loading-shade {
     position: absolute;
     top: 0;
@@ -74,7 +91,6 @@ table{
     background: rgba(0, 0, 0, 0.15);
     background: rgba(0, 0, 0, 0.15);
     z-index: 1;
-    /* display: flex; */
     align-items: center;
     justify-content: center;
   }

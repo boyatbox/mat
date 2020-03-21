@@ -145,12 +145,11 @@
                 <mat-icon>get_app</mat-icon>
             </button>
             <button mat-icon-button mat-button>Search</button>
-
         </div>
         <div class="right-table-Info"></div>
         <div class="right-table-Stat"></div>
 
-        <div>
+        <div class="table-container-parent">
             <div class="example-loading-shade" *ngIf="isLoadingResults || isRateLimitReached">
                 <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
                 <div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
@@ -231,7 +230,7 @@
                                 </button>
                                 <button mat-menu-item [satPopoverAnchor]="editpopover" (click)="editpopover.open()">
                                     <mat-icon>edit</mat-icon>
-                                    <span>Edit RCA</span>
+                                    <span>Update RCA</span>
                                     <sat-popover #editpopover hasBackdrop xAlign="before" yAlign="start"
                                         scrollStrategy="block">
                                         <inline-edit [value]="row.Build_ID" (myEvent)="refreshData($event)"></inline-edit>
