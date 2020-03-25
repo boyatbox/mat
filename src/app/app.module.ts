@@ -63,6 +63,13 @@ import { InlineEditComponent } from './inline-edit/inline-edit.component';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TblmainComponent } from './tblmain/tblmain.component';
+import { TbluserComponent } from './tbluser/tbluser.component';
+import { TbluseractivityComponent } from './tbluseractivity/tbluseractivity.component';
+
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { ChartsComponent } from './charts/charts.component';
+
+import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 
 @NgModule({
   declarations: [
@@ -71,6 +78,9 @@ import { TblmainComponent } from './tblmain/tblmain.component';
     //TableComponent,
     InlineEditComponent,
     TblmainComponent,
+    TbluserComponent,
+    TbluseractivityComponent,
+    ChartsComponent,
   ],
   imports: [
     BrowserModule,
@@ -79,10 +89,10 @@ import { TblmainComponent } from './tblmain/tblmain.component';
     A11yModule,
     HttpClientModule,
     SatPopoverModule,
-
+    NgxDaterangepickerMd.forRoot(),
     FormsModule,
     FlexLayoutModule,
-
+    NgxChartsModule,
     //ClipboardModule,
     CdkStepperModule,
     CdkTableModule,

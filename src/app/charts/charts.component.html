@@ -1,0 +1,100 @@
+<!--The content below is only a placeholder and can be replaced.-->
+
+<!-- <mat-grid-list cols="4" rowHeight="100px">
+  <mat-grid-tile
+      *ngFor="let tile of tiles"
+      [colspan]="tile.cols"
+      [rowspan]="tile.rows"
+      [style.background]="tile.color">
+    {{tile.text}}
+  </mat-grid-tile>
+</mat-grid-list> -->
+
+<!-- <mat-grid-list cols="5" rowHeight="100px">
+  <mat-grid-tile><mat-card>Total</mat-card></mat-grid-tile>
+  <mat-grid-tile><mat-card>Passed</mat-card></mat-grid-tile>
+  <mat-grid-tile><mat-card>Failed</mat-card></mat-grid-tile>
+  <mat-grid-tile><mat-card>RCA Pending</mat-card></mat-grid-tile>
+  <mat-grid-tile><mat-card>RCA Completed</mat-card></mat-grid-tile>
+</mat-grid-list>
+ -->
+
+
+<input type="text" ngxDaterangepickerMd [(ngModel)]="selected" class="form-control"/>
+ <div style="text-align:center">
+    <h1 class="card-header bg-info">
+      Welcome to {{ title }}!
+    </h1>
+    <h3 class="text-secondary">
+      PEV Selling Countries
+    </h3>
+      <div class="col">
+          <div class="row">
+            <h4>
+              Vertical Bar Chart
+            </h4>
+          </div>
+          <div class="row">
+                <ngx-charts-bar-vertical
+                [view]="view"
+                [scheme]="colorScheme"
+                [results]="single"
+                [gradient]="gradient"
+                [xAxis]="showXAxis"
+                [yAxis]="showYAxis"
+                [legend]="showLegend"
+                [showXAxisLabel]="showXAxisLabel"
+                [showYAxisLabel]="showYAxisLabel"
+                [xAxisLabel]="xAxisLabel"
+                [yAxisLabel]="yAxisLabel"
+                (select)="onSelect($event)">
+                </ngx-charts-bar-vertical>
+          </div>
+        </div>
+        <div class="col">
+          <div class="row">
+            <h4>
+              Vertical Bar Chart Normalized
+            </h4>
+          </div>
+          <div class="row">
+            <ngx-charts-bar-vertical-normalized
+            [view]="view"
+            [scheme]="colorScheme"
+            [results]="multi"
+            [gradient]="gradient"
+            [xAxis]="showXAxis"
+            [yAxis]="showYAxis"
+            [legend]="showLegend"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel"
+            (select)="onSelect($event)">
+            </ngx-charts-bar-vertical-normalized>
+          </div>
+        </div>
+      </div>
+      <div class="row ml-5">
+        <h4>
+          Stacked Vertical Bar Chart
+        </h4>
+      </div>
+      <div class="form-group row ml-5">
+        <ngx-charts-bar-vertical-stacked
+        [view]="view"
+        [scheme]="colorScheme"
+        [results]="multi"
+        [gradient]="gradient"
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [legend]="showLegend"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabel"
+        (select)="onSelect($event)">
+        </ngx-charts-bar-vertical-stacked>
+  </div>
+
+ 

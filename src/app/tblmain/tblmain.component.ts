@@ -50,7 +50,7 @@ export class TblmainComponent implements AfterViewInit {
   resultsLength = 0;
   isLoadingResults = true;
   isRateLimitReached = false;
-  selectedPredictedRCA;
+
   selected_build_status: string = "";
   //selected_predicted_rca:string="";
   //filter
@@ -71,33 +71,36 @@ export class TblmainComponent implements AfterViewInit {
 
   //tree selection
   filter_Applications: string = "";
+
+
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   constructor(private _httpClient: HttpClient, private changeDetectorRefs: ChangeDetectorRef) { }
-  /*  update(el: Element, action: string) {
-     if (action == null) { return; }
-     // copy and mutate
-     //const copy = this.dataSource.data().slice()
-     el.action = action;
-     //this.dataSource.update(copy);
-   } */
+
   //===============================================================================================
   initialSelection: string[] = [];
   allowMultiSelect: boolean = true;
   selection = new SelectionModel<string>(this.allowMultiSelect, this.initialSelection);
   docsOnThisPage: any[] = [];
-  /** Whether the number of selected elements matches the total number of rows. */
+  tblSelectedRowCount=false;
   isAllSelected() {
     const numSelected = this.docsOnThisPage.length;
     const numRows = this.data.length;
-    //console.log("numRows"+numRows+"//numSelected:"+numSelected);
-    return (numSelected === numRows);
+    return (numSelected === numRows); 
   }
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
+
+  onOpenBulkActionMenu(){
+    if(this.selection.selected.length>0){
+      this.tblSelectedRowCount=true;
+    }  
+  }
+  OnIndeterminateChange(){
+    console.log("OnIndeterminateChange");
+  }
   masterToggle() {
     this.isAllSelected() ?
-      this.selection.clear() :
-      this.data.forEach(row => this.selection.select(row.Build_ID));
+    this.selection.clear() :
+    this.data.forEach(row => this.selection.select(row.Build_ID));
     this.isAllSelected() ?
       (
         this.docsOnThisPage.length = 0,
@@ -110,19 +113,15 @@ export class TblmainComponent implements AfterViewInit {
         }
       );
   }
-  /** The label for the checkbox on the passed row */
-  /*   checkboxLabel(row?: Build): string {
-      if (!row) {
-        return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
-      }
-      return `${this.selection.isSelected(row.Build_ID) ? 'deselect' : 'select'} row ${row.Build_ID + 1}`;
+  private selectRow($event, dataSource) {
+    console.log($event.checked);
+    if ($event.checked) {
+    console.log(dataSource.name);
     }
-   */
-  //===============================================================================================
+  }
+ 
   changePage(event) {
     this.pageSize = event.pageSize;
-    console.log(this.pageSize);
-    console.log(this.selection.selected);
   }
   ngAfterViewInit() {
     this.exampleDatabase = new BuildHttpDatabase(this._httpClient);
@@ -159,7 +158,7 @@ export class TblmainComponent implements AfterViewInit {
   }
   onNgModelChange_ActualRCA($event) {
     console.log($event);
-    this.selectedOptions_PredictedRCA = $event;
+    this.selectedOptions_ActualRCA = $event;
   }
   onNgModelChange_Environemnt($event) {
     console.log($event);
@@ -201,7 +200,7 @@ export class TblmainComponent implements AfterViewInit {
     this.selectedOptions_BuildStatus = [];
     this.selectedOptions_ReviewStatus = [];
     this.selectedOptions_Owner=[];
-    this.refreshData();
+    this.resetTableData();
   }
 
   @ViewChild('childAppTree', { static: false }) childapptree;
@@ -214,6 +213,8 @@ export class TblmainComponent implements AfterViewInit {
     if (this.selectedOptions_ActualRCA) {
       this.filter_ActualRCA = this.selectedOptions_ActualRCA.join();
     }
+    console.log(this.selectedOptions_PredictedRCA);
+    console.log(this.selectedOptions_ActualRCA);
     if (this.selectedOptions_TestType) {
       this.filter_TestType = this.selectedOptions_TestType.join();
     }
@@ -230,7 +231,7 @@ export class TblmainComponent implements AfterViewInit {
       this.filter_BuildStatus = this.selectedOptions_BuildStatus.join();
     }
     if (this.selectedOptions_ReviewStatus) {
-      this.filter_BuildStatus = this.selectedOptions_ReviewStatus.join();
+      this.filter_ReviewStatus = this.selectedOptions_ReviewStatus.join();
     }
     if (this.selectedOptions_Owner) {
       this.filter_Owner = this.selectedOptions_Owner.join();
@@ -278,6 +279,7 @@ export class TblmainComponent implements AfterViewInit {
   }
 
   refreshData() {
+    //this.paginator.pageIndex = 0;
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
     merge(this.sort.sortChange, this.paginator.page)
       .pipe(
@@ -303,10 +305,49 @@ export class TblmainComponent implements AfterViewInit {
         })
       ).subscribe(data => this.data = data);
   }
+
+  resetTableData() {
+    this.paginator.pageIndex = 0;
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+    merge(this.sort.sortChange, this.paginator.page)
+      .pipe(
+        startWith({}),
+        switchMap(() => {
+          this.isLoadingResults = true;
+          return this.exampleDatabase!.getBuilds(
+           // this.sort.active, this.sort.direction, this.paginator.pageIndex, this.pageSize, this.filter_Applications, this.filter_FromDate, this.filter_ToDate, this.filter_PredictedRCA, this.filter_ActualRCA, this.filter_Environemnt, this.filter_TestType, this.filter_TestingTool, this.filter_TriggerType, this.filter_ReviewStatus, this.filter_Owner, this.filter_BuildStatus);
+           this.sort.active, this.sort.direction, this.paginator.pageIndex, this.pageSize, "", "", "", "", "", "", "", "", "", "", "", "");
+        }),
+        map(data => {
+          // Flip flag to show that loading has finished.
+          this.isLoadingResults = false;
+          this.isRateLimitReached = false;
+          this.resultsLength = data.total_count;
+          return data.builds;
+        }),
+        catchError(() => {
+          this.isLoadingResults = false;
+          // Catch if the GitHub API has reached its rate limit. Return empty data.
+          this.isRateLimitReached = true;
+          return observableOf([]);
+        })
+      ).subscribe(data => this.data = data);
+  }
+
   onApprove(build_Id) {
     console.log(build_Id);
-    //this._httpClient.post<any>('http://localhost:8080/api/approve', { "id": build_Id }).subscribe(data => { })
     this._httpClient.post<any>('http://localhost:8080/api/approve', { "id": build_Id }).subscribe(data => { this.refreshData(); })
+  }
+  onArchive(build_Id) {
+    console.log(build_Id);
+    this._httpClient.post<any>('http://localhost:8080/api/archive', { "id": build_Id }).subscribe(data => { this.refreshData(); })
+  }
+  onApprove_Bulk(){
+    console.log(this.selection.selected);
+    this._httpClient.post<any>('http://localhost:8080/api/approveall', { "id": this.selection.selected }).subscribe(data => { this.refreshData(); })
+  }
+  onArchive_Bulk(){
+
   }
 }
 export interface BuildApi {
@@ -323,8 +364,4 @@ export class BuildHttpDatabase {
     console.log(requestUrl);
     return this._httpClient.get<BuildApi>(requestUrl);
   }
-  //============================  TABLE =========================================================//
-
-  //============================  APP TREE =========================================================//
-  //============================  APP TREE =========================================================//
 }

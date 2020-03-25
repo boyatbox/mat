@@ -1,23 +1,21 @@
 <div>
-
     <form>
-
         <div class="mat-subheading-2">Enter actual RCA</div>
-
         <mat-form-field>
+            <!-- <input matInput name="actualrca" [(ngModel)]="fieldvalue"> -->
 
-            <input matInput name="actualrca" [(ngModel)]="fieldvalue">
+                <mat-label>Actual RCA</mat-label>
+                <select matNativeControl [(ngModel)]="selectedActualRCA" name="actualrca">
+                   <!--  <option value="" selected></option> -->
+                    <option *ngFor="let actualrca of arrActualRCA" [value]="actualrca.value">
+                        {{actualrca.viewValue}}
+                    </option>
+                </select>
 
         </mat-form-field>
-
         <div class="actions">
-
             <button mat-button type="button" color="primary" (click)="onCancel()">CANCEL</button>
-
-            <button mat-button type="button" color="primary" (click)="onSave()" >SAVE</button>
-
+            <button mat-button type="button" color="primary" (click)="onSave()">SAVE</button>
         </div>
-
     </form>
-
 </div>

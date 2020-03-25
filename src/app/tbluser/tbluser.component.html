@@ -1,0 +1,112 @@
+<div class="example-container mat-elevation-z8">
+    <mat-tab-group (selectedTabChange)="tabClick($event)">
+        <mat-tab>
+            <ng-template mat-tab-label>
+            <span>Pending RCA</span>
+        </ng-template>
+            <div class="build-table-container-parent">
+                <div class="example-loading-shade" *ngIf="isLoadingResults || isRateLimitReached">
+                    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+                    <div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
+                        No records found
+                    </div>
+                </div>
+                <div class="build-table-container">
+                    <table mat-table [dataSource]="data" class="example-table" matSort
+                        matSortActive="Start_DateTimeStamp" matSortDisableClear matSortDirection="asc">
+
+                        <ng-container matColumnDef="Build_ID">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Build_ID</th>
+                            <td mat-cell *matCellDef="let row">{{row.Build_ID}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="Start_DateTimeStamp">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Start Date </th>
+                            <td mat-cell *matCellDef="let row">{{row.Start_DateTimeStamp | date: 'mediumDate'}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="Portfolio_Name">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Portfolio</th>
+                            <td mat-cell *matCellDef="let row">{{row.Portfolio_Name}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="ValueStream_Name">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Value Stream</th>
+                            <td mat-cell *matCellDef="let row">{{row.ValueStream_Name}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="CI_Application_Name">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Application</th>
+                            <td mat-cell *matCellDef="let row">{{row.CI_Application_Name}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="Test_Environment">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Environment</th>
+                            <td mat-cell *matCellDef="let row">{{row.Test_Environment}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="Build_Status">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Status </th>
+                            <td mat-cell *matCellDef="let row">{{row.Build_Status | titlecase}}</td>
+                        </ng-container>
+ 
+                        <ng-container matColumnDef="Predicted_RCA">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Predicted RCA </th>
+                            <td mat-cell *matCellDef="let row">{{row.Predicted_RCA}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="Actual_RCA">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Actual RCA </th>
+                            <td mat-cell *matCellDef="let row">{{row.Actual_RCA}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="RCA_Review_Status">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Review Status </th>
+                            <td mat-cell *matCellDef="let row"><span class="reviewstatusdot"
+                                    [class.statuspending]="row.RCA_Review_Status==='Pending'"
+                                    [class.statusapproved]="row.RCA_Review_Status==='Approved'"></span>{{row.RCA_Review_Status}}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="action">
+
+                            <th mat-header-cell *matHeaderCellDef> Actions </th>
+                            <td mat-cell *matCellDef="let row">
+                                <button mat-icon-button [matMenuTriggerFor]="tablemenu" aria-label="Actions menu">
+                                    <mat-icon>more_vert</mat-icon>
+                                </button>
+                                <mat-menu #tablemenu="matMenu">
+                                    <button mat-menu-item (click)="onApprove(row.Build_ID)">
+                                        <mat-icon>check_circle</mat-icon>
+                                        <span>Approve RCA</span>
+                                    </button>
+                                    <button mat-menu-item [satPopoverAnchor]="editpopover" (click)="editpopover.open()">
+                                        <mat-icon>edit</mat-icon>
+                                        <span>Update RCA</span>
+                                        <sat-popover #editpopover hasBackdrop xAlign="before" yAlign="start"
+                                            scrollStrategy="block">
+                                            <inline-edit [value]="row.Build_ID" (myEvent)="refreshData($event)">
+                                            </inline-edit>
+                                        </sat-popover>
+                                    </button>
+                                    <button mat-menu-item (click)="onArchive(row.Build_ID)">
+                                        <mat-icon>archive</mat-icon>
+                                        <span>Archive</span>
+                                    </button>
+                                    <button mat-menu-item (click)="onOpenUrl(row.Build_ID)">
+                                        <mat-icon>open_in_new</mat-icon>
+                                        <span>Open</span>
+                                    </button>
+                                </mat-menu>
+                            </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="example-element-row"></tr>
+                    </table>
+                </div>
+  <!--               <mat-paginator [length]="resultsLength" [pageSize]="pageSize" [showFirstLastButtons]="true"
+                    [pageSizeOptions]="pageSizeOptions" (page)="changePage($event)"></mat-paginator> -->
+            </div>
+
+        </mat-tab>
+
+        <mat-tab>
+
+            <ng-template mat-tab-label>Completed</ng-template>
+            <app-tbluseractivity #child></app-tbluseractivity>
+
+        </mat-tab>
+
+    </mat-tab-group>
+</div>
